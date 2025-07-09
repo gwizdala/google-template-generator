@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+  </head>
+  <body style="background-color: #f6f6f6; color: #455469; padding: 60px; text-align: center;">
+    <div class="content" style="background-color: #fff; border-radius: 4px; margin: 0 auto; padding: 48px; width: 600px;">
+      <h1 style="font-size: 40px; text-align: center;"><?= data.title ?></h1>
+      <hr>
+      <p>The following documents were generated for customer <strong><?= data.companyName ?></strong> at <?= data.generatedAt ?>.</p>
+      <br />
+      <ul style="text-align: left;">
+        <? for (let i = 0; i < data.files.length; i++) { ?>
+          <li>
+            <p>
+              <a href="<?= data.files[i].link ?>">
+                <?= data.files[i].name ?>
+              </a>
+            </p>
+            <p>
+              <small>(Full URL: <?= data.files[i].link ?>)</small>
+            </p>
+          </li>
+        <? } ?>
+      </ul>
+    </div>
+  </body>
+</html>
