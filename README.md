@@ -1,6 +1,8 @@
 # Google Template Generator
 A Google Apps Script Project that enables you to generate custom Google Files (e.g. Slides, Docs, Sheets) from a template
 
+[How-To Guide](https://gwizkid.com/posts/google-slides-presentation-generator/)
+
 ## Steps to Use
 
 1. Create a Google Slide that has some variables in it marked by handlebars (`{{}}`) notation and slide sections marked by handlebars with the tag `_slide`, (e.g. `{{sectionName_slide}}`)
