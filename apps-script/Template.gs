@@ -36,10 +36,16 @@ class Template {
  /**
  * Replaces the values in the template with the values provided by the form
  * 
- * @param {object} formValues the responses provided in the form
  * @param {Array[object]} templateVariables the placeholder values to be replaced
  */
-  replaceTemplateVariables(formValues, templateVariables) {}
+  replaceTemplateVariables(templateVariables) {}
+
+  /**
+   * Replaces the images in the template with the values provided by the form
+   * 
+   * @param {Array[object]} templateImages the images to be replaced
+   */
+  replaceTemplateImages(templateImages) {}
 
   /**
    * Hides content and moves to the appendix section given a list of tag to hide/move
@@ -91,15 +97,25 @@ class Template {
   /**
    * Generates the template with all of the values loaded
    * 
-   * @param {Array[object]} templateVariables the placeholder values to be replaced
-   * @param {Array[string]} sections the list of requested sections
-   * @param {object} mapping the mapped metadata to render
+   * @param {object} config the config object used to generate the template
+   * @param {Array[object]} config.variables the placeholder values to be replaced
+   * @param {Array[object]} config.images the placeholder images to be replaced
+   * @param {Array[string]} config.sections the list of requested sections
+   * @param {object} config.sectionMapping the mapped metadata to render
    * 
    * @return the file URL
    */
-  generate(templateVariables, sections, mapping) {
-    this.replaceTemplateVariables(templateVariables);
-    this.setSections(sections, mapping);
+  generate(config) {
+    if (config.variables) {
+      this.replaceTemplateVariables(config.variables);
+    }
+    if (config.images) {
+      this.replaceTemplateImages(config.images)
+    }
+    if (config.sections && config.sectionMapping) {
+      this.setSections(config.sections, config.sectionMapping);
+    }
+    
     this.cleanup();
   }
 }

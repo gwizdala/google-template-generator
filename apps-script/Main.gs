@@ -24,6 +24,7 @@ function submit(e) {
   const TODAY = new Date();
   const spreadsheet = SpreadsheetApp.getActiveSpreadsheet()
   const variableMapping = getSheetDataAsObjects(spreadsheet, 'Variables');
+  const imageMapping = getSheetDataAsObjects(spreadsheet, 'Images');
   const sectionMapping = getSheetDataAsObjects(spreadsheet, 'Sections');
 
   const sheet = spreadsheet.getActiveSheet();
@@ -41,18 +42,26 @@ function submit(e) {
     const values = e.values;
     // Figure out which templatized values to replace given what's in the form
     // This is to protect from malformed content in the form or in the constants file
-    const templateValues = {};
-        
-    for (const templateVariable in variableMapping) {
-      const templateObject = variableMapping[templateVariable];
-      if (templateObject?.formIndex && templateObject.formIndex >= 0 && values[templateObject.formIndex]) {
-        const formValue = values[templateObject.formIndex];
-        const templateValue = !!formValue ? formValue : templateObject.default;
-        templateValues[templateVariable] = templateValue;
-      } else {
-        templateValues[templateVariable] = templateObject.default;
+    const mapValues = (formValues, mappingObject) => {
+      const mapToObject = {};
+      if (!!mappingObject) {  
+        for (const templateVariable in mappingObject) {
+          const templateObject = mappingObject[templateVariable];
+          if (templateObject?.formIndex && templateObject.formIndex >= 0 && formValues[templateObject.formIndex]) {
+            const formValue = formValues[templateObject.formIndex];
+            const templateValue = !!formValue ? formValue : templateObject.default;
+            mapToObject[templateVariable] = templateValue;
+          } else {
+            mapToObject[templateVariable] = templateObject.default;
+          }
+        }
       }
-    }
+
+      return mapToObject;
+    };
+
+    const templateValues = mapValues(values, variableMapping);
+    const templateImages = mapValues(values, imageMapping);
 
     // Arguments you can update
     templateValues["Year"] = TODAY.getFullYear();
@@ -89,7 +98,12 @@ function submit(e) {
       }
 
       if (template) {
-        template.generate(templateValues, sectionList, sectionMapping);
+        template.generate({
+          values: templateValues,
+          images: templateImages,
+          sections: sectionList,
+          sectionMapping: sectionMapping
+        });
         template.setOwnership(email);
         files.push({ name: template.getFileName(), link: template.getFileUrl() });
       }

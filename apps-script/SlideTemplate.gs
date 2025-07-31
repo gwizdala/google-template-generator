@@ -19,6 +19,20 @@ class SlideTemplate extends Template {
     }
   }
 
+  replaceTemplateImages(templateImages) {
+    this.slides.forEach(slide => {
+      const images = slide.getImages();
+
+      images.forEach(image => {
+        const imageTag = image.getTitle(); // get the image alt text title
+        const templateImageUrl = imageTag && templateImages[imageTag] ? templateImages[imageTag] : null;
+        if (templateImageUrl) {
+          image.replace(templateImageUrl);
+        }
+      });
+    });
+  }
+
   hideContent(tags) {
     this.slides.forEach(slide => {
       // Get all shapes (includes text) in the current slides

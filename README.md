@@ -20,13 +20,18 @@ _Variables Example_
 | FileName           | My Presentation                              | File Name         |          2 |
 | FolderId           | myDefaultFolderId                            | Folder ID         |          3 |
 | CompanyName        | Customer                                     | Company Name      |          4 |
-| Sections           |                                              | Sections          |          5 |
-| Status             |                                              | Generation Status |          6 |
-| FileLinks          |                                              | File Link(s)      |          7 |
+| Sections           |                                              | Sections          |          6 |
+| Status             |                                              | Generation Status |          7 |
+| FileLinks          |                                              | File Link(s)      |          8 |
 | TemplateTypes      | Slides                                       |                   |         -1 |
 | SlideTemplateId    | mySlideTemplateId                            |                   |         -1 |
 | DocumentTemplateId |                                              |                   |         -1 |
 | Year               |                                              |                   |         -1 |
+
+_Images Example_
+| Variable           | Default                                      | Form Key          | Form Index |
+|--------------------|----------------------------------------------|-------------------|------------|
+| CompanyLogo        |                                              | Company Logo      |          5 |
 
 _Sections Example_
 
