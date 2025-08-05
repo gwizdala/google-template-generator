@@ -99,7 +99,7 @@ function submit(e) {
 
       if (template) {
         template.generate({
-          values: templateValues,
+          variables: templateValues,
           images: templateImages,
           sections: sectionList,
           sectionMapping: sectionMapping
